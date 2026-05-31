@@ -1,0 +1,11 @@
+📦 6 Arquivos — Jogo dos 7 Erros PWA
+O que o jogo faz
+Splash screen com olho animado flutuante e fundo de grade em movimento
+Dois painéis lado a lado (ORIGINAL / DIFERENTE) gerados via Canvas 2D
+7 erros procedurais por fase — posições únicas baseadas em seed por nível
+5 tipos de erro: elemento apagado, cor alterada, tamanho reduzido, forma trocada, posição deslocada
+Timer countdown com urgência nos últimos 20s (pisca vermelho + vibração)
+Sistema de pontuação: 50 + tempo restante × 2 por acerto, -5 por clique errado
+3 dicas por fase (destaca o erro em amarelo por 2s)
+5 cenários temáticos que rotacionam por fase (Espaço, Floresta, Cidade Neon, Mar, Vulcão)
+Modais de Win/Lose com stats e navegação
