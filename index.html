@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a0a1a" />
+  <meta name="description" content="Jogo dos 7 Erros - Encontre as diferenças entre as imagens!" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="7 Erros" />
+  <title>Jogo dos 7 Erros</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- SPLASH SCREEN -->
+  <div id="splash">
+    <div class="splash-inner">
+      <div class="splash-eyeball">
+        <div class="eye-outer">
+          <div class="eye-inner">
+            <div class="pupil"></div>
+          </div>
+        </div>
+      </div>
+      <h1 class="splash-title">7<span>ERROS</span></h1>
+      <p class="splash-sub">Encontre as diferenças!</p>
+      <button id="btn-start" class="btn-main">▶ JOGAR</button>
+    </div>
+    <div class="splash-bg-grid"></div>
+  </div>
+
+  <!-- GAME SCREEN -->
+  <div id="game-screen" class="hidden">
+
+    <!-- HUD -->
+    <header class="hud">
+      <button id="btn-back" class="hud-btn" title="Voltar">←</button>
+      <div class="hud-center">
+        <div class="hud-level">FASE <span id="hud-level-num">1</span></div>
+        <div class="hud-dots" id="hud-dots"></div>
+      </div>
+      <div class="hud-timer" id="hud-timer">02:00</div>
+    </header>
+
+    <!-- PUZZLE AREA -->
+    <main class="puzzle-wrap">
+      <div class="puzzle-panel" id="panel-left">
+        <canvas id="canvas-left"></canvas>
+        <div class="panel-label">ORIGINAL</div>
+      </div>
+      <div class="puzzle-divider">
+        <div class="divider-line"></div>
+        <div class="divider-badge" id="found-badge">0/7</div>
+        <div class="divider-line"></div>
+      </div>
+      <div class="puzzle-panel" id="panel-right">
+        <canvas id="canvas-right"></canvas>
+        <div class="panel-label">DIFERENTE</div>
+      </div>
+    </main>
+
+    <!-- HINT & SCORE BAR -->
+    <footer class="game-footer">
+      <button id="btn-hint" class="btn-hint">💡 DICA <span id="hint-count">3</span></button>
+      <div class="score-display">
+        <span class="score-label">PONTOS</span>
+        <span class="score-val" id="score-val">0</span>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- WIN MODAL -->
+  <div id="modal-win" class="modal hidden">
+    <div class="modal-box win-box">
+      <div class="modal-icon">🎉</div>
+      <h2>PARABÉNS!</h2>
+      <p>Você encontrou todos os 7 erros!</p>
+      <div class="modal-stats">
+        <div class="stat"><span id="stat-time">--</span><small>Tempo</small></div>
+        <div class="stat"><span id="stat-score">--</span><small>Pontos</small></div>
+      </div>
+      <button id="btn-next" class="btn-main">PRÓXIMA FASE →</button>
+    </div>
+  </div>
+
+  <!-- LOSE MODAL -->
+  <div id="modal-lose" class="modal hidden">
+    <div class="modal-box lose-box">
+      <div class="modal-icon">⏱️</div>
+      <h2>TEMPO ESGOTADO!</h2>
+      <p>Você encontrou <strong id="lose-found">0</strong> dos 7 erros.</p>
+      <div class="modal-btns">
+        <button id="btn-retry" class="btn-main">↺ TENTAR DE NOVO</button>
+        <button id="btn-menu" class="btn-secondary">☰ MENU</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
