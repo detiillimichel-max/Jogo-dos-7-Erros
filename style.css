@@ -1,0 +1,525 @@
+/* ============================================
+   JOGO DOS 7 ERROS — style.css
+   Dark Retro-Game Aesthetic
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap');
+
+/* ---------- RESET & BASE ---------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:       #04040f;
+  --bg2:      #0a0a1e;
+  --surface:  #111128;
+  --border:   #2a2a5a;
+  --cyan:     #00f5ff;
+  --orange:   #ff6b00;
+  --pink:     #ff2d78;
+  --green:    #00ff88;
+  --yellow:   #ffe600;
+  --text:     #e0e0ff;
+  --muted:    #6060a0;
+  --radius:   12px;
+  --glow-c:   0 0 20px var(--cyan), 0 0 40px rgba(0,245,255,.3);
+  --glow-o:   0 0 20px var(--orange), 0 0 40px rgba(255,107,0,.3);
+  --glow-p:   0 0 20px var(--pink), 0 0 40px rgba(255,45,120,.3);
+}
+
+html, body {
+  width: 100%; height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Exo 2', sans-serif;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ============================================
+   SPLASH SCREEN
+   ============================================ */
+#splash {
+  position: fixed; inset: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.splash-bg-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.3;
+  animation: gridMove 8s linear infinite;
+}
+@keyframes gridMove {
+  from { background-position: 0 0; }
+  to   { background-position: 40px 40px; }
+}
+
+/* Radial vignette over grid */
+#splash::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, transparent 30%, var(--bg) 80%);
+  pointer-events: none; z-index: 1;
+}
+
+.splash-inner {
+  position: relative; z-index: 2;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 18px;
+}
+
+/* Animated eye */
+.splash-eyeball {
+  margin-bottom: 8px;
+  animation: float 3s ease-in-out infinite;
+}
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+.eye-outer {
+  width: 90px; height: 90px; border-radius: 50%;
+  border: 3px solid var(--cyan);
+  box-shadow: var(--glow-c);
+  display: grid; place-items: center;
+  animation: eyePulse 2s ease-in-out infinite;
+}
+@keyframes eyePulse {
+  0%,100% { box-shadow: var(--glow-c); }
+  50%      { box-shadow: 0 0 40px var(--cyan), 0 0 80px rgba(0,245,255,.5); }
+}
+.eye-inner {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: radial-gradient(circle at 38% 38%, #1a3a6a, #000520);
+  border: 2px solid var(--cyan);
+  display: grid; place-items: center;
+  position: relative;
+}
+.pupil {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #334, #000);
+  border: 2px solid var(--orange);
+  box-shadow: var(--glow-o);
+  animation: lookAround 4s ease-in-out infinite;
+}
+@keyframes lookAround {
+  0%,100% { transform: translate(0,0); }
+  25%     { transform: translate(6px,-4px); }
+  50%     { transform: translate(-4px,5px); }
+  75%     { transform: translate(5px,4px); }
+}
+
+.splash-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(3rem, 12vw, 5.5rem);
+  line-height: 1;
+  color: var(--cyan);
+  text-shadow: var(--glow-c);
+  letter-spacing: -2px;
+}
+.splash-title span {
+  display: block;
+  font-size: 38%;
+  letter-spacing: 10px;
+  color: var(--orange);
+  text-shadow: var(--glow-o);
+  margin-top: 4px;
+}
+
+.splash-sub {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 4px;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+/* ---------- MAIN BUTTON ---------- */
+.btn-main {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.85rem;
+  padding: 16px 40px;
+  border: 2px solid var(--cyan);
+  background: transparent;
+  color: var(--cyan);
+  border-radius: var(--radius);
+  cursor: pointer;
+  letter-spacing: 2px;
+  transition: all .2s;
+  box-shadow: 0 0 12px rgba(0,245,255,.3), inset 0 0 12px rgba(0,245,255,.05);
+  margin-top: 8px;
+}
+.btn-main:hover, .btn-main:active {
+  background: var(--cyan);
+  color: var(--bg);
+  box-shadow: var(--glow-c);
+  transform: scale(1.04);
+}
+
+.btn-secondary {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.8rem;
+  padding: 12px 24px;
+  border: 2px solid var(--muted);
+  background: transparent;
+  color: var(--muted);
+  border-radius: var(--radius);
+  cursor: pointer;
+  letter-spacing: 2px;
+  transition: all .2s;
+}
+.btn-secondary:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+}
+
+/* ============================================
+   GAME SCREEN
+   ============================================ */
+#game-screen {
+  position: fixed; inset: 0;
+  display: flex; flex-direction: column;
+  background: var(--bg);
+}
+
+/* ---------- HUD ---------- */
+.hud {
+  display: flex; align-items: center;
+  padding: 10px 14px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.hud-btn {
+  width: 38px; height: 38px;
+  border: 2px solid var(--border);
+  background: transparent;
+  color: var(--cyan);
+  border-radius: 8px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all .2s;
+  display: grid; place-items: center;
+}
+.hud-btn:hover { border-color: var(--cyan); background: rgba(0,245,255,.1); }
+
+.hud-center {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; gap: 4px;
+}
+
+.hud-level {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 3px;
+  color: var(--muted);
+}
+.hud-level span { color: var(--cyan); font-weight: 700; }
+
+.hud-dots {
+  display: flex; gap: 6px; align-items: center;
+}
+.dot {
+  width: 14px; height: 14px; border-radius: 50%;
+  border: 2px solid var(--border);
+  background: transparent;
+  transition: all .4s;
+}
+.dot.found {
+  background: var(--green);
+  border-color: var(--green);
+  box-shadow: 0 0 10px var(--green);
+  animation: dotPop .4s cubic-bezier(.36,.07,.19,.97);
+}
+@keyframes dotPop {
+  0%   { transform: scale(0); }
+  60%  { transform: scale(1.4); }
+  100% { transform: scale(1); }
+}
+
+.hud-timer {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.75rem;
+  color: var(--orange);
+  min-width: 60px;
+  text-align: right;
+  text-shadow: var(--glow-o);
+}
+.hud-timer.urgent {
+  color: var(--pink);
+  text-shadow: var(--glow-p);
+  animation: blink .5s step-end infinite;
+}
+@keyframes blink {
+  0%,100% { opacity: 1; }
+  50%      { opacity: .3; }
+}
+
+/* ---------- PUZZLE ---------- */
+.puzzle-wrap {
+  flex: 1;
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+  gap: 0;
+}
+
+.puzzle-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg2);
+}
+
+.puzzle-panel canvas {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.panel-label {
+  position: absolute; bottom: 8px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.55rem;
+  letter-spacing: 4px;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.puzzle-divider {
+  width: 36px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 8px;
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.divider-line {
+  flex: 1;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--cyan), transparent);
+}
+.divider-badge {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.45rem;
+  color: var(--cyan);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  letter-spacing: 2px;
+  white-space: nowrap;
+  text-shadow: var(--glow-c);
+}
+
+/* ---------- FOOTER ---------- */
+.game-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 16px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.btn-hint {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.7rem;
+  padding: 8px 16px;
+  border: 2px solid var(--yellow);
+  background: transparent;
+  color: var(--yellow);
+  border-radius: 8px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: all .2s;
+}
+.btn-hint:hover { background: rgba(255,230,0,.1); box-shadow: 0 0 12px rgba(255,230,0,.4); }
+.btn-hint:disabled { opacity: .35; cursor: not-allowed; }
+.btn-hint span { font-size: 0.8rem; margin-left: 4px; }
+
+.score-display {
+  display: flex; flex-direction: column; align-items: flex-end;
+}
+.score-label {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.5rem;
+  letter-spacing: 3px;
+  color: var(--muted);
+}
+.score-val {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 1rem;
+  color: var(--green);
+  text-shadow: 0 0 12px var(--green);
+}
+
+/* ---------- CLICK MARKER ---------- */
+.click-marker {
+  position: absolute;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  border: 3px solid var(--green);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  animation: markerAnim 1s ease-out forwards;
+}
+.click-marker.wrong {
+  border-color: var(--pink);
+  animation: markerWrong .6s ease-out forwards;
+}
+@keyframes markerAnim {
+  0%   { opacity: 1; transform: translate(-50%,-50%) scale(0); }
+  40%  { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%,-50%) scale(1.8); }
+}
+@keyframes markerWrong {
+  0%,100% { opacity: 0; transform: translate(-50%,-50%) scale(0); }
+  20%,60% { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+  40%,80% { transform: translate(calc(-50% + 6px),-50%) scale(1); }
+}
+
+/* ---------- ERROR CIRCLE on canvas ---------- */
+.found-circle {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  border: 3px solid var(--green);
+  box-shadow: 0 0 16px var(--green), inset 0 0 8px rgba(0,255,136,.2);
+  transform: translate(-50%, -50%);
+  animation: circleReveal .5s cubic-bezier(.36,.07,.19,.97) forwards;
+}
+@keyframes circleReveal {
+  from { transform: translate(-50%,-50%) scale(0); opacity: 0; }
+  to   { transform: translate(-50%,-50%) scale(1); opacity: 1; }
+}
+
+/* ============================================
+   MODALS
+   ============================================ */
+.modal {
+  position: fixed; inset: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,.75);
+  backdrop-filter: blur(6px);
+}
+
+.modal-box {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 20px;
+  padding: 36px 32px;
+  text-align: center;
+  max-width: 340px; width: 90%;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 16px;
+  animation: modalIn .4s cubic-bezier(.36,.07,.19,.97);
+}
+@keyframes modalIn {
+  from { transform: scale(.7); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+.win-box  { border-color: var(--green); box-shadow: 0 0 40px rgba(0,255,136,.2); }
+.lose-box { border-color: var(--pink);  box-shadow: 0 0 40px rgba(255,45,120,.2); }
+
+.modal-icon { font-size: 3rem; }
+
+.modal-box h2 {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 1rem;
+  color: var(--cyan);
+  text-shadow: var(--glow-c);
+  line-height: 1.6;
+}
+
+.modal-box p {
+  font-family: 'Exo 2', sans-serif;
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.modal-stats {
+  display: flex; gap: 28px;
+}
+.stat {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+}
+.stat span {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 1.1rem;
+  color: var(--green);
+  text-shadow: 0 0 12px var(--green);
+}
+.stat small {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.5rem;
+  letter-spacing: 2px;
+  color: var(--muted);
+}
+
+.modal-btns { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+.modal-btns .btn-main, .modal-btns .btn-secondary { width: 100%; }
+
+/* ============================================
+   TOAST
+   ============================================ */
+.toast {
+  position: fixed;
+  bottom: 80px; left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--surface);
+  border: 1px solid var(--cyan);
+  color: var(--cyan);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  padding: 10px 24px;
+  border-radius: 40px;
+  box-shadow: var(--glow-c);
+  opacity: 0;
+  transition: all .3s;
+  pointer-events: none;
+  z-index: 300;
+  white-space: nowrap;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ============================================
+   UTILITIES
+   ============================================ */
+.hidden { display: none !important; }
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 480px) {
+  .splash-title { font-size: 3rem; }
+  .btn-main { font-size: 0.7rem; padding: 14px 28px; }
+  .puzzle-divider { width: 28px; }
+  .divider-badge { font-size: 0.4rem; }
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+  .hud { padding: 6px 14px; }
+  .game-footer { padding: 6px 16px; }
+  .panel-label { display: none; }
+  }
+  
